@@ -14,6 +14,13 @@ def on_start(container):
 
     return
 
+"""
+these were added - for task 2, then removed or reverted to allow for the UI screens to work.
+
+phantom.debug("====Parameter list======")
+phantom.debug(parameters)
+phantom.debug("========================")
+"""
 def geolocate_ip_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('geolocate_ip_1() called')
 
@@ -30,9 +37,7 @@ def geolocate_ip_1(action=None, success=None, container=None, results=None, hand
                 # context (artifact id) is added to associate results with the artifact
                 'context': {'artifact_id': container_item[1]},
             })
-    phantom.debug("====Parameter list======")
-    phantom.debug(parameters)
-    phantom.debug("========================")
+
     phantom.act("geolocate ip", parameters=parameters, assets=['maxmind'], name="geolocate_ip_1")
 
     return
