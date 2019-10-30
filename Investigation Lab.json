@@ -1,13 +1,12 @@
 {
     "blockly": false,
     "blockly_xml": "<xml></xml>",
-    "category": "Samples",
+    "category": "Lab",
     "coa": {
         "data": {
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 2 task 1",
-            "hash": "d0534725d5ea7e048b79533daba944c3a4a97beb",
             "joint": {
                 "cells": [
                     {
@@ -376,7 +375,7 @@
     "create_time": "2019-10-30T15:39:17.992309+00:00",
     "draft_mode": false,
     "labels": [
-        "sample"
+        "*"
     ],
     "tags": []
 }
