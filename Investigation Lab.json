@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 2 task 1",
+            "hash": "3d32b86f75e40b7f2e407c3d126e8ebbbff82e2c",
             "joint": {
                 "cells": [
                     {
@@ -54,7 +55,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n\n    return",
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'geolocate_ip_1' block\n    geolocate_ip_1(container=container)\n\n    return",
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
@@ -75,7 +76,7 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 14,
+                        "line_end": 17,
                         "line_start": 9,
                         "name": "",
                         "notes": "",
@@ -199,8 +200,8 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
+                        "connection_name": "geolocate ip",
+                        "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
@@ -217,12 +218,12 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 27,
-                        "line_start": 14,
+                        "line_end": 51,
+                        "line_start": 38,
                         "name": "",
                         "notes": "",
                         "number": 0,
-                        "order": 2,
+                        "order": 3,
                         "outPorts": [],
                         "ports": {
                             "groups": {
@@ -295,13 +296,271 @@
                         "z": 2
                     },
                     {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "77d4e983-870e-4fb9-8212-2d4acd1efe99",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "1c4f71d7-cd90-4ed5-99fd-c101d164dbb5",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "b3520e18-97a7-4a4f-bdd3-b94044d50cf2",
+                            "selector": ".port-body[type=\"input\"]"
+                        },
+                        "type": "link",
+                        "z": 3
+                    },
+                    {
+                        "action": "geolocate ip",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "ip": "artifact:*.cef.sourceAddress"
+                        },
                         "angle": 0,
-                        "attrs": {},
+                        "app": "MaxMind",
+                        "appid": "c566e153-3118-4033-abda-14dd9748c91a",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "geolocate ip",
+                                "actions": [
+                                    "geolocate ip"
+                                ],
+                                "active": true,
+                                "app_name": "MaxMind",
+                                "app_version": "1.2.22",
+                                "appid": "c566e153-3118-4033-abda-14dd9748c91a",
+                                "asset_name": "maxmind",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "ip": "artifact:*.cef.sourceAddress"
+                                },
+                                "has_app": true,
+                                "id": 2,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "maxmind",
+                                "output": [
+                                    {
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.continent_name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.country_iso_code",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.country_name",
+                                        "data_type": "string",
+                                        "map_info": "Country"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.latitude",
+                                        "data_type": "numeric",
+                                        "map_info": "latitude"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.longitude",
+                                        "data_type": "numeric",
+                                        "map_info": "longitude"
+                                    },
+                                    {
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_path": "action_result.parameter.ip",
+                                        "data_type": "string",
+                                        "map_info": "IP Address"
+                                    },
+                                    {
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_path": "action_result.parameter.ip",
+                                        "data_type": "string",
+                                        "map_info": "name"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.city_name",
+                                        "data_type": "string",
+                                        "map_info": "City"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.postal_code",
+                                        "data_type": "string",
+                                        "map_info": "Postal Code"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.as_org",
+                                        "data_type": "string",
+                                        "map_info": "Organization"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.state_iso_code",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.state_name",
+                                        "data_type": "string",
+                                        "map_info": "State/Province"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.time_zone",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "summary.total_objects",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "summary.total_objects_successful",
+                                        "data_type": "numeric"
+                                    }
+                                ],
+                                "parameters": {
+                                    "ip": {
+                                        "allow_list": true,
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_type": "string",
+                                        "default": null,
+                                        "description": "IP to geolocate",
+                                        "key": "ip",
+                                        "primary": true,
+                                        "required": true
+                                    }
+                                },
+                                "product_name": "GeoIP2",
+                                "product_vendor": "MaxMind",
+                                "targets": "2",
+                                "type": "information"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "geolocate ip"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            }
+                        },
+                        "block_code": "def geolocate_ip_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('geolocate_ip_1() called')\n\n    # collect data for 'geolocate_ip_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'geolocate_ip_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"geolocate ip\", parameters=parameters, assets=['maxmind'], name=\"geolocate_ip_1\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": true,
                         "connection_name": "",
                         "connection_type": "",
-                        "id": "430a0e1f-deee-4d38-b44a-c30a7b265dce",
-                        "inPorts": [],
-                        "outPorts": [],
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "b3520e18-97a7-4a4f-bdd3-b94044d50cf2",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 38,
+                        "line_start": 17,
+                        "message": "Configuring now",
+                        "name": "geolocate ip",
+                        "notes": "",
+                        "number": 1,
+                        "order": 2,
+                        "outPorts": [
+                            "out"
+                        ],
                         "ports": {
                             "groups": {
                                 "in": {
@@ -356,14 +615,66 @@
                         },
                         "position": {
                             "x": 220,
-                            "y": 60
+                            "y": 80
                         },
+                        "previous_function": "",
+                        "previous_name": "geolocate_ip_1",
+                        "required_params": {
+                            "ip": true
+                        },
+                        "reviewer": "",
+                        "show_number": false,
                         "size": {
-                            "height": 108,
-                            "width": 294
+                            "height": 100,
+                            "width": 180
                         },
-                        "type": "coa.Intro",
-                        "z": 3
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": "",
+                        "z": 5
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "bbcba170-9756-41f2-a42b-12383605fe09",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "b3520e18-97a7-4a4f-bdd3-b94044d50cf2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "8b37bb20-18de-433d-90a6-70c90f9937d2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 6
                     }
                 ]
             },
@@ -372,7 +683,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-30T15:39:17.992309+00:00",
+    "create_time": "2019-10-30T15:45:26.624959+00:00",
     "draft_mode": false,
     "labels": [
         "*"
