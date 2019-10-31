@@ -177,7 +177,7 @@ def decidePromoteToCaseCall(action=None, success=None, container=None, results=N
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        playbook_Matts_Repo_Case_Promotion_Lab_1(action=action, success=success, container=container, results=results, handle=handle)
+        Store_Country_Name(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
@@ -310,6 +310,23 @@ def apiAddHUDCardAndCloseContainer(action=None, success=None, container=None, re
     phantom.pin(container=container, data=results_item_1_0, message="Country is safe and not on Banner Countries list", pin_type="card", pin_style="blue", name=None)
 
     phantom.set_status(container=container, status="Closed")
+
+    return
+
+def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('Store_Country_Name() called')
+    input_parameter_0 = ""
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
+    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)
 
     return
 

@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 5 task 3",
-            "hash": "a9048e40bcb173e6d336c0fcb4ed48fde5a95d1f",
+            "hash": "80f32d681e02ef3b79338de7a079a7b74c4f5e2a",
             "joint": {
                 "cells": [
                     {
@@ -1435,12 +1435,12 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 329,
-                        "line_start": 316,
+                        "line_end": 346,
+                        "line_start": 333,
                         "name": "",
                         "notes": "",
                         "number": 0,
-                        "order": 18,
+                        "order": 19,
                         "outPorts": [],
                         "ports": {
                             "groups": {
@@ -1495,7 +1495,7 @@
                             }
                         },
                         "position": {
-                            "x": 1620,
+                            "x": 1840,
                             "y": 120
                         },
                         "previous_function": "",
@@ -1625,7 +1625,7 @@
                                 }
                             },
                             "g.delete": {
-                                "display": "block"
+                                "display": "none"
                             },
                             "g.error": {
                                 "opacity": 0
@@ -1970,46 +1970,6 @@
                         "z": 49
                     },
                     {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "120806c1-0e7c-40d5-add9-caa8d4f7a7ee",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "13567ba0-ddf0-4a41-a2f3-af64f0204ad4",
-                            "port": "out-1",
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "266225e4-7fbe-452b-865c-ac7a9e37aa55",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 52
-                    },
-                    {
                         "active": false,
                         "angle": 0,
                         "attrs": {
@@ -2158,7 +2118,7 @@
                             }
                         },
                         "position": {
-                            "x": 1360,
+                            "x": 1600,
                             "y": 100
                         },
                         "previous_function": "",
@@ -2441,7 +2401,7 @@
                                 "xlink:href": "/inc/coa/img/block_icon_note_light_on.svg"
                             }
                         },
-                        "block_code": "def decidePromoteToCaseCall(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decidePromoteToCaseCall() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Notify_IT_Team:action_result.summary.responses.0\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        playbook_Matts_Repo_Case_Promotion_Lab_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n    apiPINCardCloseContainer(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
+                        "block_code": "def decidePromoteToCaseCall(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decidePromoteToCaseCall() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Notify_IT_Team:action_result.summary.responses.0\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Store_Country_Name(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n    apiPINCardCloseContainer(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -2983,7 +2943,7 @@
                             }
                         },
                         "position": {
-                            "x": 1360,
+                            "x": 1600,
                             "y": 360
                         },
                         "previous_function": "",
@@ -3165,7 +3125,7 @@
                             }
                         },
                         "position": {
-                            "x": 1360,
+                            "x": 1600,
                             "y": 220
                         },
                         "previous_function": "",
@@ -6434,6 +6394,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def decision_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_3() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"\", \"!=\", \"custom_list:Prior Hashes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        apiCheckBannedCountryList(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n    join_filter_3(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
@@ -6570,7 +6533,7 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "api": "pin, set status",
+                        "api": "add list",
                         "attrs": {
                             ".api": {
                                 "text": "apiCheckBannedCountry...."
@@ -6799,6 +6762,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def filter_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('filter_3() called')\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"custom_list:Banned Countries\", \"==\", \"geolocate_ip_1:action_result.data.*.country_name\"],\n        ],\n        name=\"filter_3:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        decision_1(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    # collect filtered artifact ids for 'if' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"custom_list:Banned Countries\", \"!=\", \"geolocate_ip_1:action_result.data.*.country_name\"],\n        ],\n        name=\"filter_3:condition_2\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_2 or matched_results_2:\n        apiAddHUDCardAndCloseContainer(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)\n\n    return",
@@ -6928,7 +6894,7 @@
                         "state": "filter",
                         "status": "",
                         "type": "coa.Filter",
-                        "warn": "",
+                        "warn": false,
                         "z": 107
                     },
                     {
@@ -7015,7 +6981,7 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "api": "call api",
+                        "api": "pin, set status",
                         "attrs": {
                             ".api": {
                                 "text": "apiAddHUDCardAndClos..."
@@ -7055,6 +7021,9 @@
                             },
                             ".title": {
                                 "text": "API"
+                            },
+                            "g.code image": {
+                                "opacity": 1
                             },
                             "g.delete": {
                                 "display": "none"
@@ -7174,7 +7143,7 @@
                             }
                         },
                         "position": {
-                            "x": 1360,
+                            "x": 1600,
                             "y": 500
                         },
                         "previous_function": "",
@@ -7190,6 +7159,265 @@
                         "type": "coa.API",
                         "warn": false,
                         "z": 112
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "435db649-acb4-49b0-8643-56f70b721dc7",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "13567ba0-ddf0-4a41-a2f3-af64f0204ad4",
+                            "port": "out-1",
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "f1da5b4d-c2c1-42f4-968f-c58ee7570a4d",
+                            "selector": ".port-body[type=\"input\"]"
+                        },
+                        "type": "link",
+                        "z": 113
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "32a0c116-0923-4786-91f7-b6bf9060699c",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "f1da5b4d-c2c1-42f4-968f-c58ee7570a4d",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "266225e4-7fbe-452b-865c-ac7a9e37aa55",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 116
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".functionBlock": {
+                                "text": "Store Country Name"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "custom function"
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1,
+                                "xlink:href": "/inc/coa/img/block_icon_note_light_on.svg"
+                            }
+                        },
+                        "block_code": "def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Store_Country_Name() called')\n    input_parameter_0 = \"\"\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Notify IT Team",
+                        "connection_type": "action",
+                        "customCodeEndLineOffset": 5,
+                        "customCodeStartLine": 7,
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Store Country Name",
+                        "description": "",
+                        "functionBlock": "custom function",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "f1da5b4d-c2c1-42f4-968f-c58ee7570a4d",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 333,
+                        "line_start": 316,
+                        "message": "Configuring now",
+                        "name": "custom function",
+                        "notes": "Custom func block to Store Country Name ",
+                        "number": 1,
+                        "order": 18,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "outputVariables": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": ""
+                            }
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": ""
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1360,
+                            "y": 100
+                        },
+                        "previous_function": "",
+                        "previous_name": "Store_Country_Name",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "custom function",
+                        "status": "",
+                        "title": "custom function",
+                        "type": "coa.FunctionBlock",
+                        "userGeneratedCode": "\n    # Write your custom code here...\n",
+                        "warn": false,
+                        "z": 117
                     }
                 ]
             },
@@ -7198,7 +7426,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-31T14:59:06.996359+00:00",
+    "create_time": "2019-10-31T15:09:35.258233+00:00",
     "draft_mode": false,
     "labels": [
         "*"
