@@ -82,6 +82,12 @@ def domain_reputation_1(action=None, success=None, container=None, results=None,
 
     return
 
+"""
+I hard coded United States into the RHV and the decision forked as expected.
+This therefore strongly suggests the comparison to the Custom Lists is failing?
+When you perform your review, the Custom List is named Banned Countries.
+This only has one entry for United States
+"""
 def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('decision_1() called')
 

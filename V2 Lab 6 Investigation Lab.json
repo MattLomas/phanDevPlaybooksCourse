@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "9b3498ca5e5dd5fe49e3e49883d5a44f2b93e039",
+            "hash": "5e130e3c22d4d8024cdecb0dae00c8a0fc711e7f",
             "joint": {
                 "cells": [
                     {
@@ -73,8 +73,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 151,
-                        "line_start": 138,
+                        "line_end": 157,
+                        "line_start": 144,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -4224,8 +4224,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 113,
-                        "line_start": 106,
+                        "line_end": 119,
+                        "line_start": 112,
                         "message": "Configuring now",
                         "name": "pin",
                         "notes": "",
@@ -4453,8 +4453,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 138,
-                        "line_start": 113,
+                        "line_end": 144,
+                        "line_start": 119,
                         "message": "Country found in Banned List",
                         "name": "prompt",
                         "notes": "",
@@ -4618,7 +4618,7 @@
                         "custom_code": "",
                         "custom_join": "",
                         "custom_name": "",
-                        "description": "",
+                        "description": "I hard coded United States into the RHV and the decision forked as expected.\nThis therefore strongly suggests the comparison to the Custom Lists is failing?\nWhen you perform your review, the Custom List is named Banned Countries.\nThis only has one entry for United States",
                         "hasElse": true,
                         "has_custom": false,
                         "has_custom_block": false,
@@ -4631,8 +4631,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 106,
-                        "line_start": 85,
+                        "line_end": 112,
+                        "line_start": 91,
                         "name": "decision",
                         "notes": "",
                         "number": 1,
@@ -4736,7 +4736,7 @@
                         "status": "",
                         "type": "coa.Decision",
                         "warn": "",
-                        "z": 31
+                        "z": 32
                     }
                 ]
             },
@@ -4745,7 +4745,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-31T16:42:35.241390+00:00",
+    "create_time": "2019-10-31T16:55:25.566086+00:00",
     "draft_mode": false,
     "labels": [
         "*"
