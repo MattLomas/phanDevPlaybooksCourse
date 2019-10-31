@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 2 task 1",
-            "hash": "a27a0d174475f74a2869691b16188c7b5c9990d6",
+            "hash": "e0f5be4ed9f5f3f47a2ca5764d858f7a727167c7",
             "joint": {
                 "cells": [
                     {
@@ -690,12 +690,53 @@
                         "z": 16
                     },
                     {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "9e425e7f-5542-4765-bd9d-759fcb95df13",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "8b37bb20-18de-433d-90a6-70c90f9937d2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 18
+                    },
+                    {
                         "action": "domain reputation",
                         "action_type": "investigate",
                         "active": false,
                         "active_keys": {},
                         "active_values": {
-                            "domain": "geolocate_ip_1:artifact:*.cef.sourceDnsDomain"
+                            "domain": "artifact:*.cef.sourceDnsDomain"
                         },
                         "angle": 0,
                         "app": "VirusTotal",
@@ -723,7 +764,7 @@
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
-                                    "domain": "geolocate_ip_1:artifact:*.cef.sourceDnsDomain"
+                                    "domain": "artifact:*.cef.sourceDnsDomain"
                                 },
                                 "has_app": true,
                                 "id": 10,
@@ -1345,7 +1386,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'domain_reputation_1' call\n    inputs_data_1 = phantom.collect2(container=container, datapath=['geolocate_ip_1:artifact:*.cef.sourceDnsDomain', 'geolocate_ip_1:artifact:*.id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for inputs_item_1 in inputs_data_1:\n        if inputs_item_1[0]:\n            parameters.append({\n                'domain': inputs_item_1[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': inputs_item_1[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['virustotal'], name=\"domain_reputation_1\", parent_action=action)\n\n    return",
+                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['virustotal'], name=\"domain_reputation_1\", parent_action=action)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1452,48 +1493,7 @@
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": "",
-                        "z": 17
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "9e425e7f-5542-4765-bd9d-759fcb95df13",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "8b37bb20-18de-433d-90a6-70c90f9937d2",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 18
+                        "z": 19
                     }
                 ]
             },
@@ -1502,7 +1502,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-31T10:38:06.555267+00:00",
+    "create_time": "2019-10-31T10:48:45.117212+00:00",
     "draft_mode": false,
     "labels": [
         "*"
