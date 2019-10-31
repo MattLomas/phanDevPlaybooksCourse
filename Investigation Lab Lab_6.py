@@ -315,13 +315,23 @@ def apiAddHUDCardAndCloseContainer(action=None, success=None, container=None, re
 
 def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('Store_Country_Name() called')
-    input_parameter_0 = ""
+    filtered_results_data_1 = phantom.collect2(container=container, datapath=["filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name"])
+    filtered_results_item_1_0 = [item[0] for item in filtered_results_data_1]
 
     ################################################################################
     ## Custom Code Start
     ################################################################################
 
     # Write your custom code here...
+    
+    url = ''
+    for item in filtered_results_data_1:
+        if item[0]:
+            url = item[0]
+    
+    # store country name into object db
+    phantom.save_object(key="country_name_Email_Notify", value={'value': "'" + url +
+    "'"}, auto_delete=True, container_id=container['id'])
 
     ################################################################################
     ## Custom Code End
