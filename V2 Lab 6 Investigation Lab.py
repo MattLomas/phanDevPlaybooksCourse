@@ -101,7 +101,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        prompt_1(action=action, success=success, container=container, results=results, handle=handle)
+        custom_function_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
@@ -116,28 +116,21 @@ def pin_1(action=None, success=None, container=None, results=None, handle=None, 
 
     return
 
-def prompt_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('prompt_1() called')
+def custom_function_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('custom_function_1() called')
+    input_parameter_0 = ""
+
+    ################################################################################
+    ## Custom Code Start
+    ################################################################################
+
+    # Write your custom code here...
+
+    # how do I print the value of the COUNTRY grabbed from the CUSTOM LIST and JSON output for COUNTRY NAME following the Investigation block?
     
-    # set user and message variables for phantom.prompt call
-    user = "admin"
-    message = """Country found in Banned List"""
-
-    #responses:
-    response_types = [
-        {
-            "prompt": "",
-            "options": {
-                "type": "list",
-                "choices": [
-                    "Yes",
-                    "No",
-                ]
-            },
-        },
-    ]
-
-    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name="prompt_1", response_types=response_types)
+    ################################################################################
+    ## Custom Code End
+    ################################################################################
 
     return
 
