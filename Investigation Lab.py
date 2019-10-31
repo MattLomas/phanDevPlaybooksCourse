@@ -65,7 +65,7 @@ def domain_reputation_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="domain_reputation_1", parent_action=action)
+    phantom.act("domain reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="domain_reputation_1")
 
     return
 
@@ -86,7 +86,7 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="file_reputation_1", parent_action=action)
+    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="file_reputation_1")
 
     return
 
@@ -98,7 +98,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
         container=container,
         action_results=results,
         conditions=[
-            ["file_reputation_1:action_result.summary.positives", ">=", 50],
+            ["file_reputation_1:action_result.summary.positives", ">=", 10],
         ])
 
     # call connected blocks if condition 1 matched
