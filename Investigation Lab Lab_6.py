@@ -86,7 +86,7 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=decision_3, name="file_reputation_1")
+    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=decisionCheckFileHashOnList, name="file_reputation_1")
 
     return
 
@@ -279,8 +279,8 @@ def join_filter_3(action=None, success=None, container=None, results=None, handl
     
     return
 
-def decision_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('decision_3() called')
+def decisionCheckFileHashOnList(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('decisionCheckFileHashOnList() called')
 
     # check for 'if' condition 1
     matched_artifacts_1, matched_results_1 = phantom.condition(
