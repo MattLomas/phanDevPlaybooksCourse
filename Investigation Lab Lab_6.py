@@ -245,7 +245,7 @@ def filter_3(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["geolocate_ip_1:action_result.data.*.country_name", "==", "custom_list:Banned Countries"],
+            ["geolocate_ip_1:action_result.data.*.country_name", "in", "custom_list:Banned Countries"],
         ],
         name="filter_3:condition_1")
 
@@ -258,7 +258,7 @@ def filter_3(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["geolocate_ip_1:action_result.data.*.country_name", "!=", "custom_list:Banned Countries"],
+            ["geolocate_ip_1:action_result.data.*.country_name", "not in", "custom_list:Banned Countries"],
         ],
         name="filter_3:condition_2")
 
