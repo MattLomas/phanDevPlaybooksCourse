@@ -107,6 +107,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
         return
 
     # call connected blocks for 'else' condition 2
+    apiAddComment(action=action, success=success, container=container, results=results, handle=handle)
 
     return
 
@@ -190,6 +191,9 @@ def decidePromoteToCaseCall(action=None, success=None, container=None, results=N
         playbook_Matts_Repo_Case_Promotion_Lab_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
+    # call connected blocks for 'else' condition 2
+    apiPINCardCloseContainer(action=action, success=success, container=container, results=results, handle=handle)
+
     return
 
 def playbook_Matts_Repo_Case_Promotion_Lab_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
@@ -197,6 +201,38 @@ def playbook_Matts_Repo_Case_Promotion_Lab_1(action=None, success=None, containe
     
     # call playbook "Matts Repo/Case Promotion Lab", returns the playbook_run_id
     playbook_run_id = phantom.playbook("Matts Repo/Case Promotion Lab", container=container)
+
+    return
+
+def apiAddComment(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiAddComment() called')
+
+    phantom.comment(container=container, comment="Threat level found to be low")
+    apiPinHUDCard(container=container)
+
+    return
+
+def apiPinHUDCard(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiPinHUDCard() called')
+
+    phantom.pin(container=container, data="", message="Processed and found harmless", pin_type="", pin_style="blue", name="pbookPIN")
+    apiSetStatusOfContainer(container=container)
+
+    return
+
+def apiSetStatusOfContainer(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiSetStatusOfContainer() called')
+
+    phantom.set_status(container=container, status="Closed")
+
+    return
+
+def apiPINCardCloseContainer(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiPINCardCloseContainer() called')
+
+    phantom.set_status(container=container, status="Closed")
+
+    phantom.pin(container=container, data="", message="IT Team decision of NO so HUD Card Pinned and container status set to CLOSED.", pin_type="", pin_style="blue", name=None)
 
     return
 
