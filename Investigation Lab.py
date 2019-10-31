@@ -152,7 +152,7 @@ Notify IT team?"""
         },
     ]
 
-    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name="Notify_IT_Team", parameters=parameters, response_types=response_types)
+    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name="Notify_IT_Team", parameters=parameters, response_types=response_types, callback=decidePromoteToCaseCall)
 
     return
 
@@ -171,6 +171,32 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_1 or matched_results_1:
         Notify_IT_Team(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
+
+    return
+
+def decidePromoteToCaseCall(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('decidePromoteToCaseCall() called')
+
+    # check for 'if' condition 1
+    matched_artifacts_1, matched_results_1 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["Notify_IT_Team:action_result.summary.responses.0", "==", "Yes"],
+        ])
+
+    # call connected blocks if condition 1 matched
+    if matched_artifacts_1 or matched_results_1:
+        playbook_Matts_Repo_Case_Promotion_Lab_1(action=action, success=success, container=container, results=results, handle=handle)
+        return
+
+    return
+
+def playbook_Matts_Repo_Case_Promotion_Lab_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('playbook_Matts_Repo_Case_Promotion_Lab_1() called')
+    
+    # call playbook "Matts Repo/Case Promotion Lab", returns the playbook_run_id
+    playbook_run_id = phantom.playbook("Matts Repo/Case Promotion Lab", container=container)
 
     return
 
