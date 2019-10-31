@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 5 task 3",
-            "hash": "c5ced8817c51b84861c26bf9c2b52744421bcffb",
+            "hash": "0f777fb3ae394384e9fa8c2aa0a0199e2d418b59",
             "joint": {
                 "cells": [
                     {
@@ -6340,199 +6340,6 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#637282",
-                                "transform": "rotate(45 30 70)"
-                            },
-                            ".inPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".number": {
-                                "text": 3
-                            },
-                            ".outPorts>.port-0": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                },
-                                "ref-x": 83,
-                                "ref-y": 40
-                            },
-                            ".outPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-1": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": 82
-                            },
-                            ".outPorts>.port-1>.port-body": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def decision_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_3() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"\", \"!=\", \"custom_list:Prior Hashes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        apiCheckBannedCountryList(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n    join_filter_3(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "file reputation",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "hasElse": true,
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "c8d0ae02-51b0-4229-b1a9-816a5cbc2571",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 303,
-                        "line_start": 282,
-                        "name": "decision",
-                        "notes": "",
-                        "number": 3,
-                        "order": 16,
-                        "outPorts": [
-                            "out-1",
-                            "out-2"
-                        ],
-                        "outputs": [
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "!=",
-                                        "data_type": "",
-                                        "param": "",
-                                        "value": "custom_list:Prior Hashes"
-                                    }
-                                ],
-                                "display": "If",
-                                "logic": "and",
-                                "type": "if"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "",
-                                        "value": ""
-                                    }
-                                ],
-                                "display": "Else",
-                                "logic": "and",
-                                "type": "else"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 280,
-                            "y": -40
-                        },
-                        "previous_function": "",
-                        "previous_name": "decision_3",
-                        "show_number": true,
-                        "size": {
-                            "height": 82,
-                            "width": 82
-                        },
-                        "state": "decision",
-                        "status": "",
-                        "type": "coa.Decision",
-                        "warn": "",
-                        "z": 105
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
                         "api": "add list",
                         "attrs": {
                             ".api": {
@@ -7055,6 +6862,187 @@
                         "attrs": {
                             ".background": {
                                 "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".functionBlock": {
+                                "text": "Store Country Name"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "custom function"
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_error.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1,
+                                "xlink:href": "/inc/coa/img/block_icon_note_light_on.svg"
+                            }
+                        },
+                        "block_code": "def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Store_Country_Name() called')\n    filtered_results_data_1 = phantom.collect2(container=container, datapath=[\"filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name\"])\n    filtered_results_item_1_0 = [item[0] for item in filtered_results_data_1]\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Notify IT Team",
+                        "connection_type": "action",
+                        "customCodeEndLineOffset": 5,
+                        "customCodeStartLine": 8,
+                        "custom_callback": "",
+                        "custom_code": "def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Store_Country_Name() called')\n    filtered_results_data_1 = phantom.collect2(container=container, datapath=[\"filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name\"])\n    filtered_results_item_1_0 = [item[0] for item in filtered_results_data_1]\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)\n\n    return",
+                        "custom_join": "",
+                        "custom_name": "Store Country Name",
+                        "description": "",
+                        "functionBlock": "custom function",
+                        "has_custom": true,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "f1da5b4d-c2c1-42f4-968f-c58ee7570a4d",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 343,
+                        "line_start": 316,
+                        "message": "Configuring now",
+                        "name": "custom function",
+                        "notes": "Custom func block to Store Country Name ",
+                        "number": 1,
+                        "order": 18,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "outputVariables": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": ""
+                            }
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": "filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1360,
+                            "y": 100
+                        },
+                        "previous_function": "",
+                        "previous_name": "Store_Country_Name",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "custom function",
+                        "status": "",
+                        "title": "custom function",
+                        "type": "coa.FunctionBlock",
+                        "userGeneratedCode": "\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n",
+                        "warn": false,
+                        "z": 121
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
                                 "stroke": "#818D99",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -7239,7 +7227,7 @@
                         "status": "",
                         "type": "coa.Filter",
                         "warn": false,
-                        "z": 119
+                        "z": 122
                     },
                     {
                         "active": false,
@@ -7247,42 +7235,45 @@
                         "attrs": {
                             ".background": {
                                 "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "stroke": "#637282",
+                                "transform": "rotate(45 30 70)"
                             },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".functionBlock": {
-                                "text": "Store Country Name"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
+                            ".inPorts>.port-0>.port-body": {
                                 "port": {
                                     "id": "in",
                                     "type": "in"
                                 }
                             },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
+                            ".number": {
+                                "text": 3
                             },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
+                            ".outPorts>.port-0": {
                                 "port": {
-                                    "id": "out",
+                                    "id": "out-1",
+                                    "type": "out"
+                                },
+                                "ref-x": 83,
+                                "ref-y": 40
+                            },
+                            ".outPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "out-1",
                                     "type": "out"
                                 }
                             },
-                            ".title": {
-                                "text": "custom function"
+                            ".outPorts>.port-1": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                },
+                                "ref-x": 41,
+                                "ref-y": 82
+                            },
+                            ".outPorts>.port-1>.port-body": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                }
                             },
                             "g.delete": {
                                 "display": "none"
@@ -7291,64 +7282,75 @@
                                 "opacity": 0
                             },
                             "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_error.svg"
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
                             },
                             "g.notes": {
                                 "display": "block"
                             },
                             "g.notes image": {
-                                "opacity": 1,
-                                "xlink:href": "/inc/coa/img/block_icon_note_light_on.svg"
+                                "opacity": 1
                             }
                         },
-                        "block_code": "def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Store_Country_Name() called')\n    filtered_results_data_1 = phantom.collect2(container=container, datapath=[\"filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name\"])\n    filtered_results_item_1_0 = [item[0] for item in filtered_results_data_1]\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)\n\n    return",
+                        "block_code": "def decision_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_3() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"custom_list:Prior Hashes\", \"!=\", \"custom_list:Prior Hashes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        apiCheckBannedCountryList(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n    join_filter_3(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Notify IT Team",
+                        "connection_name": "file reputation",
                         "connection_type": "action",
-                        "customCodeEndLineOffset": 5,
-                        "customCodeStartLine": 8,
                         "custom_callback": "",
-                        "custom_code": "def Store_Country_Name(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Store_Country_Name() called')\n    filtered_results_data_1 = phantom.collect2(container=container, datapath=[\"filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name\"])\n    filtered_results_item_1_0 = [item[0] for item in filtered_results_data_1]\n\n    ################################################################################\n    ## Custom Code Start\n    ################################################################################\n\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n\n    ################################################################################\n    ## Custom Code End\n    ################################################################################\n    playbook_Matts_Repo_Case_Promotion_Lab_1(container=container)\n\n    return",
+                        "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Store Country Name",
+                        "custom_name": "",
                         "description": "",
-                        "functionBlock": "custom function",
+                        "hasElse": true,
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "f1da5b4d-c2c1-42f4-968f-c58ee7570a4d",
+                        "id": "c8d0ae02-51b0-4229-b1a9-816a5cbc2571",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 343,
-                        "line_start": 316,
-                        "message": "Configuring now",
-                        "name": "custom function",
-                        "notes": "Custom func block to Store Country Name ",
-                        "number": 1,
-                        "order": 18,
+                        "line_end": 303,
+                        "line_start": 282,
+                        "name": "decision",
+                        "notes": "",
+                        "number": 3,
+                        "order": 16,
                         "outPorts": [
-                            "out"
+                            "out-1",
+                            "out-2"
                         ],
-                        "outputVariables": [
+                        "outputs": [
                             {
-                                "position": 0,
-                                "type": "",
-                                "value": ""
-                            }
-                        ],
-                        "parameters": [
+                                "conditions": [
+                                    {
+                                        "comparison": "!=",
+                                        "data_type": "",
+                                        "param": "custom_list:Prior Hashes",
+                                        "value": "custom_list:Prior Hashes"
+                                    }
+                                ],
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
                             {
-                                "position": 0,
-                                "type": "",
-                                "value": "filtered-data:filter_3:condition_1:geolocate_ip_1:action_result.data.*.country_name"
+                                "conditions": [
+                                    {
+                                        "comparison": "==",
+                                        "data_type": "",
+                                        "param": "",
+                                        "value": ""
+                                    }
+                                ],
+                                "display": "Else",
+                                "logic": "and",
+                                "type": "else"
                             }
                         ],
                         "ports": {
@@ -7404,23 +7406,21 @@
                             }
                         },
                         "position": {
-                            "x": 1360,
-                            "y": 100
+                            "x": 280,
+                            "y": -40
                         },
                         "previous_function": "",
-                        "previous_name": "Store_Country_Name",
+                        "previous_name": "decision_3",
                         "show_number": true,
                         "size": {
-                            "height": 100,
-                            "width": 180
+                            "height": 82,
+                            "width": 82
                         },
-                        "state": "custom function",
+                        "state": "decision",
                         "status": "",
-                        "title": "custom function",
-                        "type": "coa.FunctionBlock",
-                        "userGeneratedCode": "\n    # Write your custom code here...\n    \n    url = ''\n    for item in filtered_results_data_1:\n        if item[0]:\n            url = item[0]\n    \n    # store country name into object db\n    phantom.save_object(key=\"country_name_Email_Notify\", value={'value': \"'\" + url +\n    \"'\"}, auto_delete=True, container_id=container['id'])\n",
-                        "warn": false,
-                        "z": 121
+                        "type": "coa.Decision",
+                        "warn": "",
+                        "z": 125
                     }
                 ]
             },
@@ -7429,7 +7429,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-31T15:17:49.186990+00:00",
+    "create_time": "2019-10-31T15:29:08.887299+00:00",
     "draft_mode": false,
     "labels": [
         "*"
