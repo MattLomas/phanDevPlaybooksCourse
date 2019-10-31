@@ -287,7 +287,7 @@ def decisionCheckFileHashOnList(action=None, success=None, container=None, resul
         container=container,
         action_results=results,
         conditions=[
-            ["artifact:*.cef.fileHash", "!=", "custom_list:Prior Hashes"],
+            ["artifact:*.cef.fileHash", "not in", "custom_list:Prior Hashes"],
         ])
 
     # call connected blocks if condition 1 matched
