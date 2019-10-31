@@ -215,7 +215,7 @@ def apiAddComment(action=None, success=None, container=None, results=None, handl
 def apiPinHUDCard(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('apiPinHUDCard() called')
 
-    phantom.pin(container=container, data="", message="Processed and found harmless", pin_type="", pin_style="blue", name="pbookPIN")
+    phantom.pin(container=container, data="", message="Processed and found harmless", pin_type="card", pin_style="blue", name="pbookPIN")
     apiSetStatusOfContainer(container=container)
 
     return
@@ -232,7 +232,7 @@ def apiPINCardCloseContainer(action=None, success=None, container=None, results=
 
     phantom.set_status(container=container, status="Closed")
 
-    phantom.pin(container=container, data="", message="IT Team decision of NO so HUD Card Pinned and container status set to CLOSED.", pin_type="", pin_style="blue", name=None)
+    phantom.pin(container=container, data="", message="IT Team decision of NO so HUD Card Pinned and container status set to CLOSED.", pin_type="card", pin_style="blue", name=None)
 
     return
 
