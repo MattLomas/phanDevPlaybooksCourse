@@ -225,8 +225,8 @@ def apiPINCardCloseContainer(action=None, success=None, container=None, results=
 
     return
 
-def apiCheckBannedCountryList(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('apiCheckBannedCountryList() called')
+def apiAddToHASHList(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiAddToHASHList() called')
 
     inputs_data_1 = phantom.collect2(container=container, datapath=['file_reputation_1:artifact:*.cef.fileHash'], action_results=results)
 
@@ -245,7 +245,7 @@ def filter_3(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["custom_list:Banned Countries", "==", "geolocate_ip_1:action_result.data.*.country_name"],
+            ["geolocate_ip_1:action_result.data.*.country_name", "==", "custom_list:Banned Countries"],
         ],
         name="filter_3:condition_1")
 
@@ -258,7 +258,7 @@ def filter_3(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["custom_list:Banned Countries", "!=", "geolocate_ip_1:action_result.data.*.country_name"],
+            ["geolocate_ip_1:action_result.data.*.country_name", "!=", "custom_list:Banned Countries"],
         ],
         name="filter_3:condition_2")
 
@@ -287,12 +287,12 @@ def decision_3(action=None, success=None, container=None, results=None, handle=N
         container=container,
         action_results=results,
         conditions=[
-            ["custom_list:Prior Hashes", "!=", "custom_list:Prior Hashes"],
+            ["artifact:*.cef.fileHash", "!=", "custom_list:Prior Hashes"],
         ])
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        apiCheckBannedCountryList(action=action, success=success, container=container, results=results, handle=handle)
+        apiAddToHASHList(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
