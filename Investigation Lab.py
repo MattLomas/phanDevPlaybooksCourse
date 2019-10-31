@@ -44,7 +44,7 @@ def geolocate_ip_1(action=None, success=None, container=None, results=None, hand
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("geolocate ip", parameters=parameters, assets=['maxmind'], callback=join_decision_1, name="geolocate_ip_1")
+    phantom.act("geolocate ip", parameters=parameters, assets=['maxmind'], callback=join_filterBannedCountries, name="geolocate_ip_1")
 
     return
 
@@ -65,7 +65,7 @@ def domain_reputation_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="domain_reputation_1")
+    phantom.act("domain reputation", parameters=parameters, assets=['virustotal'], callback=join_filterBannedCountries, name="domain_reputation_1")
 
     return
 
@@ -86,7 +86,7 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=join_decision_1, name="file_reputation_1")
+    phantom.act("file reputation", parameters=parameters, assets=['virustotal'], callback=join_filterBannedCountries, name="file_reputation_1")
 
     return
 
@@ -109,17 +109,6 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     # call connected blocks for 'else' condition 2
     apiAddComment(action=action, success=success, container=container, results=results, handle=handle)
 
-    return
-
-def join_decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('join_decision_1() called')
-
-    # check if all connected incoming actions are done i.e. have succeeded or failed
-    if phantom.actions_done([ 'file_reputation_1', 'geolocate_ip_1', 'domain_reputation_1' ]):
-        
-        # call connected block "decision_1"
-        decision_1(container=container, handle=handle)
-    
     return
 
 """
@@ -233,6 +222,61 @@ def apiPINCardCloseContainer(action=None, success=None, container=None, results=
     phantom.set_status(container=container, status="Closed")
 
     phantom.pin(container=container, data="", message="IT Team decision of NO so HUD Card Pinned and container status set to CLOSED.", pin_type="card", pin_style="blue", name=None)
+
+    return
+
+def filterBannedCountries(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filterBannedCountries() called')
+
+    # collect filtered artifact ids for 'if' condition 1
+    matched_artifacts_1, matched_results_1 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["custom_list:Banned Countries", "!=", "geolocate_ip_1:action_result.data.*.country_name"],
+        ],
+        name="filterBannedCountries:condition_1")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_1 or matched_results_1:
+        apiCheckBannedCountryList(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
+
+    # collect filtered artifact ids for 'if' condition 2
+    matched_artifacts_2, matched_results_2 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["", "==", "custom_list:Banned Countries"],
+        ],
+        name="filterBannedCountries:condition_2")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_2 or matched_results_2:
+        decision_1(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)
+
+    return
+
+def join_filterBannedCountries(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('join_filterBannedCountries() called')
+
+    # check if all connected incoming actions are done i.e. have succeeded or failed
+    if phantom.actions_done([ 'file_reputation_1', 'geolocate_ip_1', 'domain_reputation_1' ]):
+        
+        # call connected block "filterBannedCountries"
+        filterBannedCountries(container=container, handle=handle)
+    
+    return
+
+def apiCheckBannedCountryList(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('apiCheckBannedCountryList() called')
+
+    results_data_1 = phantom.collect2(container=container, datapath=['geolocate_ip_1:action_result.data.*.country_name'], action_results=results)
+
+    results_item_1_0 = [item[0] for item in results_data_1]
+
+    phantom.pin(container=container, data=results_item_1_0, message="Country not on Banned Country list so container closed", pin_type="card", pin_style="blue", name=None)
+
+    phantom.set_status(container=container, status="Closed")
 
     return
 
