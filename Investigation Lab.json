@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Investigation Lab from Lab 2 task 1",
-            "hash": "f944bfe0a93ab404f71864c72ed272eb5d53721a",
+            "hash": "4146eb5aee311c8f5c94f59fc27e0d0dd43b5f52",
             "joint": {
                 "cells": [
                     {
@@ -55,7 +55,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'geolocate_ip_1' block\n    geolocate_ip_1(container=container)\n\n    return",
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'geolocate_ip_1' block\n    geolocate_ip_1(container=container)\n\n    # call 'file_reputation_1' block\n    file_reputation_1(container=container)\n\n    # call 'domain_reputation_1' block\n    domain_reputation_1(container=container)\n\n    return",
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
@@ -76,7 +76,7 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 17,
+                        "line_end": 23,
                         "line_start": 9,
                         "name": "",
                         "notes": "",
@@ -138,8 +138,8 @@
                             }
                         },
                         "position": {
-                            "x": 100,
-                            "y": 100
+                            "x": -40,
+                            "y": 260
                         },
                         "previous_function": "",
                         "previous_name": "",
@@ -242,7 +242,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "file reputation",
+                        "connection_name": "geolocate ip, file reputation, domain reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "def on_finish(container, summary):\n    phantom.debug('on_finish() called')\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all detals of actions \n    # can be collected here.\n\n    summary_json = phantom.get_summary()\n    if 'result' in summary_json:\n        for action_result in summary_json['result']:\n             if 'action_run_id' in action_result:\n                action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                phantom.debug(action_results)\n\n    return",
@@ -260,8 +260,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 104,
-                        "line_start": 91,
+                        "line_end": 106,
+                        "line_start": 93,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -320,8 +320,8 @@
                             }
                         },
                         "position": {
-                            "x": 1020,
-                            "y": 100
+                            "x": 680,
+                            "y": 260
                         },
                         "previous_function": "",
                         "previous_name": "",
@@ -540,7 +540,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def geolocate_ip_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('geolocate_ip_1() called')\n\n    # collect data for 'geolocate_ip_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'geolocate_ip_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"geolocate ip\", parameters=parameters, assets=['maxmind'], callback=domain_reputation_1, name=\"geolocate_ip_1\")\n\n    return",
+                        "block_code": "def geolocate_ip_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('geolocate_ip_1() called')\n\n    # collect data for 'geolocate_ip_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'geolocate_ip_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"geolocate ip\", parameters=parameters, assets=['maxmind'], name=\"geolocate_ip_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -565,8 +565,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 45,
-                        "line_start": 24,
+                        "line_end": 51,
+                        "line_start": 30,
                         "message": "Configuring now",
                         "name": "geolocate ip",
                         "notes": "zzzthese were added - for task 2, then removed or reverted to allow for the UI screens to work.\n\nphantom.debug(\"====Parameter list======\")\nphantom.debug(parameters)\nphantom.debug(\"========================\")",
@@ -628,8 +628,8 @@
                             }
                         },
                         "position": {
-                            "x": 220,
-                            "y": 80
+                            "x": 100,
+                            "y": 100
                         },
                         "previous_function": "",
                         "previous_name": "geolocate_ip_1",
@@ -648,851 +648,6 @@
                         "type": "coa.Action",
                         "warn": false,
                         "z": 15
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "aa20fec8-0c45-473b-99a7-758a3cc1ab5a",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "b3520e18-97a7-4a4f-bdd3-b94044d50cf2",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 16
-                    },
-                    {
-                        "action": "domain reputation",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "domain": "artifact:*.cef.sourceDnsDomain"
-                        },
-                        "angle": 0,
-                        "app": "VirusTotal",
-                        "appid": "11f676a4-f3d4-4db0-8587-f4e942c07c7c",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "domain reputation",
-                                "actions": [
-                                    "test connectivity",
-                                    "file reputation",
-                                    "url reputation",
-                                    "domain reputation",
-                                    "ip reputation",
-                                    "get file",
-                                    "get report",
-                                    "detonate file",
-                                    "detonate url"
-                                ],
-                                "active": true,
-                                "app_name": "VirusTotal",
-                                "app_version": "1.2.52",
-                                "appid": "11f676a4-f3d4-4db0-8587-f4e942c07c7c",
-                                "asset_name": "virustotal",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "domain": "artifact:*.cef.sourceDnsDomain"
-                                },
-                                "has_app": true,
-                                "id": 10,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "virustotal",
-                                "output": [
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "success"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Domain",
-                                        "column_order": 0,
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_path": "action_result.parameter.domain",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "test.com"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Alexa category",
-                                        "column_order": 1,
-                                        "data_path": "action_result.data.*.Alexa category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "test"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Alexa domain info",
-                                        "column_order": 2,
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_path": "action_result.data.*.Alexa domain info",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "test.com is one of the top 10 sites in the world and is in the test category"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Alexa rank",
-                                        "column_order": 3,
-                                        "data_path": "action_result.data.*.Alexa rank",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            10
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Bitdefender category",
-                                        "column_order": 5,
-                                        "data_path": "action_result.data.*.BitDefender category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "searchengines"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Bitdefender domain info",
-                                        "column_order": 15,
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_path": "action_result.data.*.BitDefender domain info",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "This URL domain/host was seen to host badware at some point in time"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Dr. Web category",
-                                        "column_order": 16,
-                                        "data_path": "action_result.data.*.Dr&2e;Web category",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.Dr.Web category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "chats"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.Forcepoint ThreatSeeker category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "search engines and portals"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.Malwarebytes hpHosts info",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Opera domain info",
-                                        "column_order": 6,
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_path": "action_result.data.*.Opera domain info",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "The URL domain/host was seen to host badware at some point in time"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Trendmicro category",
-                                        "column_order": 7,
-                                        "data_path": "action_result.data.*.TrendMicro category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "search engines portals"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Child safety",
-                                        "column_order": 8,
-                                        "data_path": "action_result.data.*.WOT domain info.Child safety",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Excellent"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Privacy",
-                                        "column_order": 9,
-                                        "data_path": "action_result.data.*.WOT domain info.Privacy",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Excellent"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Trustworthiness",
-                                        "column_order": 10,
-                                        "data_path": "action_result.data.*.WOT domain info.Trustworthiness",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Excellent"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Vendor reliability",
-                                        "column_order": 11,
-                                        "data_path": "action_result.data.*.WOT domain info.Vendor reliability",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Excellent"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Websense threatseeker category",
-                                        "column_order": 12,
-                                        "data_path": "action_result.data.*.Websense ThreatSeeker category",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "search engines and portals"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Adult content",
-                                        "column_order": 13,
-                                        "data_path": "action_result.data.*.Webutation domain info.Adult content",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "no"
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Safety score",
-                                        "column_order": 14,
-                                        "data_path": "action_result.data.*.Webutation domain info.Safety score",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            100
-                                        ]
-                                    },
-                                    {
-                                        "column_name": "Webutation Info Verdict",
-                                        "column_order": 4,
-                                        "data_path": "action_result.data.*.Webutation domain info.Verdict",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "safe"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.categories",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "search engines and portals"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_communicating_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-02-01 07:43:22"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_communicating_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            56
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.detected_communicating_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "d98246798d0025fbfeeeae3fa0dbfc7aadc7c61b5560a51f043250b5e16b61e1"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_communicating_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            71
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2018-12-15 02:21:06"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            1
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "169f959197cc4f23ee7fc955708b467385c85f61ae34d58c29c246e106ffa60c"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            69
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_referrer_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-01-22 00:20:30"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_referrer_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            18
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.detected_referrer_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "b84e5d161f26a8fbc34f2dd5a72c8f6660b3793e56659682c14112fd02e8a437"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_referrer_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            70
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_urls.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            2
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_urls.*.scan_date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-01-31 10:16:38"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.detected_urls.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            66
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "url",
-                                            "file name"
-                                        ],
-                                        "data_path": "action_result.data.*.detected_urls.*.url",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "https://test.com/url?q=http%3A%2F%2Fqlql.ru%2FFAG"
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.pcaps",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "0e6db89e84666d8b620be803315c2fdd5c94f38c87000665b4870bf124aea156"
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_path": "action_result.data.*.resolutions.*.ip_address",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "103.241.58.24"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.resolutions.*.last_resolved",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2018-09-12 23:04:32"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.response_code",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            1
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_path": "action_result.data.*.subdomains",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "profiles.test.com"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-01-31 09:27:18"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            0
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "c655aa8e162e9f8935e2be8ccdb0ebfabb5696eb0e0f6e9e1b65e163082614fc"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            71
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-01-31 03:02:39"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            0
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "908b020e301271d46a789be079e26611ce77d53f06766140248997a99c6ebd35"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            70
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.date",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2019-01-31 20:32:40"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            0
-                                        ]
-                                    },
-                                    {
-                                        "contains": [
-                                            "sha256"
-                                        ],
-                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.sha256",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "d3f7ae7ade2d708654f54b61703dd3aa42f93be75618ccba17a4110e529e4a5c"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.total",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            69
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.undetected_urls.*",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "2018-11-15 19:09:07"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.verbose_msg",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Domain found in dataset"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.whois",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Domain Name: test.COM\nRegistry Domain ID: 2138514_DOMAIN_COM-VRSN\nRegistrar WHOIS Server: whois.markmonitor.com\nRegistrar URL: http://www.markmonitor.com\nUpdated Date: 2018-02-21T18:36:40Z\nCreation Date: 1997-09-15T04:00:00Z\nRegistry Expiry Date: 2020-09-14T04:00:00Z\nRegistrar: MarkMonitor Inc.\nRegistrar IANA ID: 292\nRegistrar Abuse Contact Email: abusecomplaints@markmonitor.com\nRegistrar Abuse Contact Phone: +1.2083895740\nDomain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nDomain Status: clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited\nDomain Status: serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited\nDomain Status: serverTransferProhibited https://icann.org/epp#serverTransferProhibited\nDomain Status: serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited\nName Server: NS1.test.COM\nName Server: NS2.test.COM\nName Server: NS3.test.COM\nName Server: NS4.test.COM\nDNSSEC: unsigned\nDomain Name: test.com\nUpdated Date: 2018-02-21T10:45:07-0800\nCreation Date: 1997-09-15T00:00:00-0700\nRegistrar Registration Expiration Date: 2020-09-13T21:00:00-0700\nRegistrar: MarkMonitor, Inc.\nDomain Status: clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)\nDomain Status: clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)\nDomain Status: clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)\nDomain Status: serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)\nDomain Status: serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)\nDomain Status: serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)\nRegistrant Country: US\nAdmin Organization: test LLC\nAdmin State/Province: CA\nAdmin Country: US\nTech Organization: test LLC\nTech State/Province: CA\nTech Country: US\nName Server: ns2.test.com\nName Server: ns4.test.com\nName Server: ns1.test.com\nName Server: ns3.test.com"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.whois_timestamp",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            1547237868
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.alexa_rank",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            10
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.communicating_samples",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            100
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.detected_urls",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            100
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.downloaded_samples",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            100
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Downloaded samples: 100, Detected urls: 100, Alexa rank: 10, Communicating samples: 100"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            1
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects_successful",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            1
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "summary.total_positives",
-                                        "data_type": "numeric",
-                                        "example_values": [
-                                            0
-                                        ]
-                                    }
-                                ],
-                                "parameters": {
-                                    "domain": {
-                                        "contains": [
-                                            "domain"
-                                        ],
-                                        "data_type": "string",
-                                        "default": null,
-                                        "description": "Domain to query",
-                                        "key": "domain",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true
-                                    }
-                                },
-                                "product_name": "VirusTotal",
-                                "product_vendor": "VirusTotal",
-                                "targets": "10",
-                                "type": "reputation"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "domain reputation"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['virustotal'], callback=file_reputation_1, name=\"domain_reputation_1\", parent_action=action)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "geolocate ip",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "2e02db05-add7-417a-bf3d-c360be623da0",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 68,
-                        "line_start": 45,
-                        "message": "Configuring now",
-                        "name": "domain reputation",
-                        "notes": "",
-                        "number": 1,
-                        "order": 3,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 440,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "domain_reputation_1",
-                        "required_params": {
-                            "domain": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": "",
-                        "z": 19
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "70f7d339-c657-43bb-8b68-4bac0d4eda14",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "e0b76d4d-7c0a-43c6-9b33-3dfcb1f34d62",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 20
                     },
                     {
                         "action": "file reputation",
@@ -3903,6 +3058,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.icon image": {
                                 "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
                             },
@@ -3910,14 +3068,14 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['virustotal'], name=\"file_reputation_1\", parent_action=action)\n\n    return",
+                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n\n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['virustotal'], name=\"file_reputation_1\", parent_action=action)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "domain reputation",
-                        "connection_type": "action",
+                        "connection_name": "",
+                        "connection_type": "",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
@@ -3935,8 +3093,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 91,
-                        "line_start": 68,
+                        "line_end": 93,
+                        "line_start": 72,
                         "message": "Configuring now",
                         "name": "file reputation",
                         "notes": "",
@@ -3998,8 +3156,8 @@
                             }
                         },
                         "position": {
-                            "x": 660,
-                            "y": 80
+                            "x": 100,
+                            "y": 240
                         },
                         "previous_function": "",
                         "previous_name": "file_reputation_1",
@@ -4018,6 +3176,774 @@
                         "type": "coa.Action",
                         "warn": "",
                         "z": 21
+                    },
+                    {
+                        "action": "domain reputation",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "domain": "artifact:*.cef.sourceDnsDomain"
+                        },
+                        "angle": 0,
+                        "app": "VirusTotal",
+                        "appid": "11f676a4-f3d4-4db0-8587-f4e942c07c7c",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "domain reputation",
+                                "actions": [
+                                    "test connectivity",
+                                    "file reputation",
+                                    "url reputation",
+                                    "domain reputation",
+                                    "ip reputation",
+                                    "get file",
+                                    "get report",
+                                    "detonate file",
+                                    "detonate url"
+                                ],
+                                "active": true,
+                                "app_name": "VirusTotal",
+                                "app_version": "1.2.52",
+                                "appid": "11f676a4-f3d4-4db0-8587-f4e942c07c7c",
+                                "asset_name": "virustotal",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "domain": "artifact:*.cef.sourceDnsDomain"
+                                },
+                                "has_app": true,
+                                "id": 10,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "virustotal",
+                                "output": [
+                                    {
+                                        "data_path": "action_result.status",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "success"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Domain",
+                                        "column_order": 0,
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_path": "action_result.parameter.domain",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "test.com"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Alexa category",
+                                        "column_order": 1,
+                                        "data_path": "action_result.data.*.Alexa category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "test"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Alexa domain info",
+                                        "column_order": 2,
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_path": "action_result.data.*.Alexa domain info",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "test.com is one of the top 10 sites in the world and is in the test category"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Alexa rank",
+                                        "column_order": 3,
+                                        "data_path": "action_result.data.*.Alexa rank",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            10
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Bitdefender category",
+                                        "column_order": 5,
+                                        "data_path": "action_result.data.*.BitDefender category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "searchengines"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Bitdefender domain info",
+                                        "column_order": 15,
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_path": "action_result.data.*.BitDefender domain info",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "This URL domain/host was seen to host badware at some point in time"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Dr. Web category",
+                                        "column_order": 16,
+                                        "data_path": "action_result.data.*.Dr&2e;Web category",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.Dr.Web category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "chats"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.Forcepoint ThreatSeeker category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "search engines and portals"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.Malwarebytes hpHosts info",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "Opera domain info",
+                                        "column_order": 6,
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_path": "action_result.data.*.Opera domain info",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "The URL domain/host was seen to host badware at some point in time"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Trendmicro category",
+                                        "column_order": 7,
+                                        "data_path": "action_result.data.*.TrendMicro category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "search engines portals"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Child safety",
+                                        "column_order": 8,
+                                        "data_path": "action_result.data.*.WOT domain info.Child safety",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Excellent"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Privacy",
+                                        "column_order": 9,
+                                        "data_path": "action_result.data.*.WOT domain info.Privacy",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Excellent"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Trustworthiness",
+                                        "column_order": 10,
+                                        "data_path": "action_result.data.*.WOT domain info.Trustworthiness",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Excellent"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Vendor reliability",
+                                        "column_order": 11,
+                                        "data_path": "action_result.data.*.WOT domain info.Vendor reliability",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Excellent"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Websense threatseeker category",
+                                        "column_order": 12,
+                                        "data_path": "action_result.data.*.Websense ThreatSeeker category",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "search engines and portals"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Adult content",
+                                        "column_order": 13,
+                                        "data_path": "action_result.data.*.Webutation domain info.Adult content",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "no"
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Safety score",
+                                        "column_order": 14,
+                                        "data_path": "action_result.data.*.Webutation domain info.Safety score",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            100
+                                        ]
+                                    },
+                                    {
+                                        "column_name": "Webutation Info Verdict",
+                                        "column_order": 4,
+                                        "data_path": "action_result.data.*.Webutation domain info.Verdict",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "safe"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.categories",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "search engines and portals"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_communicating_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-02-01 07:43:22"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_communicating_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            56
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.detected_communicating_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "d98246798d0025fbfeeeae3fa0dbfc7aadc7c61b5560a51f043250b5e16b61e1"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_communicating_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            71
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2018-12-15 02:21:06"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            1
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "169f959197cc4f23ee7fc955708b467385c85f61ae34d58c29c246e106ffa60c"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_downloaded_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            69
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_referrer_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-01-22 00:20:30"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_referrer_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            18
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.detected_referrer_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "b84e5d161f26a8fbc34f2dd5a72c8f6660b3793e56659682c14112fd02e8a437"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_referrer_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            70
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_urls.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            2
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_urls.*.scan_date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-01-31 10:16:38"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.detected_urls.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            66
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "url",
+                                            "file name"
+                                        ],
+                                        "data_path": "action_result.data.*.detected_urls.*.url",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "https://test.com/url?q=http%3A%2F%2Fqlql.ru%2FFAG"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.pcaps",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "0e6db89e84666d8b620be803315c2fdd5c94f38c87000665b4870bf124aea156"
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_path": "action_result.data.*.resolutions.*.ip_address",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "103.241.58.24"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.resolutions.*.last_resolved",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2018-09-12 23:04:32"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.response_code",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            1
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_path": "action_result.data.*.subdomains",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "profiles.test.com"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-01-31 09:27:18"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            0
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "c655aa8e162e9f8935e2be8ccdb0ebfabb5696eb0e0f6e9e1b65e163082614fc"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_communicating_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            71
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-01-31 03:02:39"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            0
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "908b020e301271d46a789be079e26611ce77d53f06766140248997a99c6ebd35"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_downloaded_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            70
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.date",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2019-01-31 20:32:40"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            0
+                                        ]
+                                    },
+                                    {
+                                        "contains": [
+                                            "sha256"
+                                        ],
+                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.sha256",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "d3f7ae7ade2d708654f54b61703dd3aa42f93be75618ccba17a4110e529e4a5c"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_referrer_samples.*.total",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            69
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.undetected_urls.*",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "2018-11-15 19:09:07"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.verbose_msg",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Domain found in dataset"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.whois",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Domain Name: test.COM\nRegistry Domain ID: 2138514_DOMAIN_COM-VRSN\nRegistrar WHOIS Server: whois.markmonitor.com\nRegistrar URL: http://www.markmonitor.com\nUpdated Date: 2018-02-21T18:36:40Z\nCreation Date: 1997-09-15T04:00:00Z\nRegistry Expiry Date: 2020-09-14T04:00:00Z\nRegistrar: MarkMonitor Inc.\nRegistrar IANA ID: 292\nRegistrar Abuse Contact Email: abusecomplaints@markmonitor.com\nRegistrar Abuse Contact Phone: +1.2083895740\nDomain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nDomain Status: clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited\nDomain Status: serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited\nDomain Status: serverTransferProhibited https://icann.org/epp#serverTransferProhibited\nDomain Status: serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited\nName Server: NS1.test.COM\nName Server: NS2.test.COM\nName Server: NS3.test.COM\nName Server: NS4.test.COM\nDNSSEC: unsigned\nDomain Name: test.com\nUpdated Date: 2018-02-21T10:45:07-0800\nCreation Date: 1997-09-15T00:00:00-0700\nRegistrar Registration Expiration Date: 2020-09-13T21:00:00-0700\nRegistrar: MarkMonitor, Inc.\nDomain Status: clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)\nDomain Status: clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)\nDomain Status: clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)\nDomain Status: serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)\nDomain Status: serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)\nDomain Status: serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)\nRegistrant Country: US\nAdmin Organization: test LLC\nAdmin State/Province: CA\nAdmin Country: US\nTech Organization: test LLC\nTech State/Province: CA\nTech Country: US\nName Server: ns2.test.com\nName Server: ns4.test.com\nName Server: ns1.test.com\nName Server: ns3.test.com"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.whois_timestamp",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            1547237868
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.alexa_rank",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            10
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.communicating_samples",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            100
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.detected_urls",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            100
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.downloaded_samples",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            100
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string",
+                                        "example_values": [
+                                            "Downloaded samples: 100, Detected urls: 100, Alexa rank: 10, Communicating samples: 100"
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "summary.total_objects",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            1
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "summary.total_objects_successful",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            1
+                                        ]
+                                    },
+                                    {
+                                        "data_path": "summary.total_positives",
+                                        "data_type": "numeric",
+                                        "example_values": [
+                                            0
+                                        ]
+                                    }
+                                ],
+                                "parameters": {
+                                    "domain": {
+                                        "contains": [
+                                            "domain"
+                                        ],
+                                        "data_type": "string",
+                                        "default": null,
+                                        "description": "Domain to query",
+                                        "key": "domain",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true
+                                    }
+                                },
+                                "product_name": "VirusTotal",
+                                "product_vendor": "VirusTotal",
+                                "targets": "10",
+                                "type": "reputation"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "domain reputation"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            }
+                        },
+                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.sourceDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['virustotal'], name=\"domain_reputation_1\", parent_action=action)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": false,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "2e02db05-add7-417a-bf3d-c360be623da0",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 72,
+                        "line_start": 51,
+                        "message": "Configuring now",
+                        "name": "domain reputation",
+                        "notes": "",
+                        "number": 1,
+                        "order": 3,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 100,
+                            "y": 380
+                        },
+                        "previous_function": "",
+                        "previous_name": "domain_reputation_1",
+                        "required_params": {
+                            "domain": true
+                        },
+                        "reviewer": "",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": "",
+                        "z": 23
                     },
                     {
                         "attrs": {
@@ -4040,7 +3966,130 @@
                         "endDirections": [
                             "left"
                         ],
-                        "id": "a792ebeb-9de7-475a-a511-198e92487383",
+                        "id": "dd2f77c0-cacc-48ef-9272-78387887e5e6",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "1c4f71d7-cd90-4ed5-99fd-c101d164dbb5",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "e0b76d4d-7c0a-43c6-9b33-3dfcb1f34d62",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 24
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "acfa422f-f76c-4ffe-80b1-e90c3fee3aab",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "1c4f71d7-cd90-4ed5-99fd-c101d164dbb5",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 25
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "5840581c-3e5e-4214-aa43-70e68cfc55d9",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "b3520e18-97a7-4a4f-bdd3-b94044d50cf2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "8b37bb20-18de-433d-90a6-70c90f9937d2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 26
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "7a45b37c-6f5c-42a7-bfb2-42b4b7e3c02c",
                         "router": {
                             "name": "metro"
                         },
@@ -4058,7 +4107,48 @@
                             "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
                         },
                         "type": "link",
-                        "z": 22
+                        "z": 27
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "7078110f-157c-484c-85cf-e1734fe8b166",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "2e02db05-add7-417a-bf3d-c360be623da0",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "8b37bb20-18de-433d-90a6-70c90f9937d2",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 28
                     }
                 ]
             },
@@ -4067,7 +4157,7 @@
         "schema": 3,
         "version": "4.5.15370"
     },
-    "create_time": "2019-10-31T10:53:59.702940+00:00",
+    "create_time": "2019-10-31T11:49:00.732343+00:00",
     "draft_mode": false,
     "labels": [
         "*"
