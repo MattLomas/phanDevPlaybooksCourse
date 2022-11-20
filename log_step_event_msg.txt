@@ -1,0 +1,208 @@
+/*
+ *--common header to follow
+AIM: add in a log event as a close to step-TIMER detials - both STIMER and FULLSTIMER 
+ */
+
+%let macroDir=%str(/tmp);
+%global rc_check_macro_dir_exists; 
+%let rc_check_macro_dir_exists=%sysfunc(fileexist(%str(&macroDir.)));
+%put ;
+%put NOTE: RC Check Macro Dir Exists: &rc_check_macro_dir_exists.   ( 1 = EXISTS    0 = NOTEXISTS);
+%put NOTE: Dir Checked        : &macroDir.;
+%put ;
+
+data _null_;
+    rc_check=&rc_check_macro_dir_exists.;
+    if rc_check then call execute('options SASAUTOS=(SASAUTOS, "'||"&macroDir."||'");');
+run;
+
+proc options option=sasautos;run;
+%grapes;
+options SASAUTOS=(SASAUTOS, "/tmp", "/Users/matthewlomas");
+%put NOTE: SASAUTOS set to: %sysfunc(getoption(SASAUTOS));
+ %*--digest pre-processed log data which is either STIMER or FULLSTIMER;
+ %*--with an AWK script performing the pre-processing of the log file(s);
+FILENAME PRCSDLOG 'wps-sas-alt-logs';
+LIBNAME  ADTDATA '002.Data';
+data adtdata.ingest_saslog_timer_details;
+put hello;
+run;
+
+%*--idea: create two macros called BWRUN and BWQUIT which would allow for the TIMER_MACRO to output
+to the sas-log event timer details;
+
+%*--dev-note: I am using global macro variables to turn some (exec) some debug statements
+in the macro-logger macros. There is a suitably named gloabl macro var for each of the
+currently x2 macro-logger macros:
+- step_begin_logger_debug
+- step_end_logger_debug
+VIP: to have a condition that checks that the variable exists, then is set to YES
+;
+
+%macro ACTIVATE_STEP_BEGIN_LOGGER_DEBUG();
+%global step_begin_logger_debug;
+%let step_begin_logger_debug=YES;
+%put ;
+%put NOTE: STEP_BEGIN_LOGGER_DEBUG activated (set to YES);
+%put ;
+%mend;
+
+
+%macro STOP_STEP_BEGIN_LOGGER_DEBUG();
+    %put ;
+    %put NOTE: deactivating STEP_BEGIN_LOGGER_DEBUG ;
+    %put ;
+    %symdel step_begin_logger_debug;
+    %if %symexist(step_begin_logger_debug) %then %do;
+        %put ;
+        %put ERROR: found in macro: DEACTIVATE_STEP_BEGIN_LOGGER;
+        %put ERROR: Failed to delete the macro-variable STEP_BEGIN_LOGGER_DEBUG using in-built pct-SYMDEL;
+        %put ;
+    %end;
+%mend;
+
+%ACTIVATE_STEP_BEGIN_LOGGER_DEBUG;
+%*STOP_STEP_BEGIN_LOGGER_DEBUG;
+
+
+%macro step_begin_logger(_stepid=, activate_source_logging=NO, activate_notes_logging=NO);
+/* Start timer Macro*/
+
+/*macro-logger: DEBUG FEATURE - if step_begin_logger_debug=YES*/
+%if %symexist(step_begin_logger_debug) %then %do;
+%put ;
+%put NOTE: Debug macro-variable FOUND - SETP_BEGIN_LOGGER_DEBUG;
+%put ;
+    %if %UPCASE(&step_begin_logger_debug.)=YES %then %do;
+    %put ;
+    %put NOTE: DEBUG ACTIVATED for macro-logger STEP_BEGIN_LOGGER;
+    %put NOTE: existing sas-session OPTIONS for SOURCE and NOTES;
+    %put NOTE: SOURCE set: %sysfunc(getoption(source));
+    %put NOTE: NOTES  set: %sysfunc(getoption(notes));
+    %put ;
+    %put NOTE: macro-logger check: macro-variable ACTIVATE_SOURCE_LOGGING and ACTIVATE_NOTES_LOGGING;
+    %put NOTE: ACTIVATE_SOURCE_LOGGING  set: &ACTIVATE_SOURCE_LOGGING.;
+    %put NOTE: ACTIVATE_NOTES_LOGGING   set: &ACTIVATE_NOTES_LOGGING.;
+    %put ;
+    %put NOTE: Deactivating optoins: SOURCE and NOTES to make a clean sas-session log;
+    %put ; 
+    %end;
+%end;
+
+options nosource nonotes;
+
+/*macro-logger: DEBUG FEATURE - if step_begin_logger_debug=YES*/
+%if %symexist(step_begin_logger_debug) %then %do;
+    %if %UPCASE(&step_begin_logger_debug.)=YES %then %do;
+    %put ;
+    %put NOTE: validation of sas-session OPTIONS for SOURCE and NOTES following deactivation;
+    %put NOTE: SOURCE set: %sysfunc(getoption(source));
+    %put NOTE: NOTES  set: %sysfunc(getoption(notes));
+    %put ; 
+    %end;
+%end;
+
+
+%global _step_timer_start;
+%let _step_timer_start = %sysfunc(datetime());
+data _null_;
+    tme = &_step_timer_start;
+    put 50*'-' / " STEP: &_stepid. START TIME:" tme b8601dt. / 50*'-';
+  run;
+
+
+%if %UPCASE(&activate_source_logging.)=YES %then %do;
+options source;  
+
+/*macro-logger: DEBUG FEATURE - if step_begin_logger_debug=YES*/
+%if %symexist(step_begin_logger_debug) %then %do;
+    %if %UPCASE(&step_begin_logger_debug.)=YES %then %do;
+    %put ;
+    %put NOTE: ACTIVATE_SOURCE_LOGGING macro-option was YES;
+    %put NOTE: Validatio of Option SOURCE at end of macro-logger processing:;
+    %put NOTE: SOURCE set: %sysfunc(getoption(source));
+    %put ; 
+    %end;
+%end;
+%end;
+
+%if %UPCASE(&activate_notes_logging.)=YES %then %do;
+options notes;
+
+/*macro-logger: DEBUG FEATURE - if step_begin_logger_debug=YES*/
+%if %symexist(step_begin_logger_debug) %then %do;
+    %if %UPCASE(&step_begin_logger_debug.)=YES %then %do;
+    %put ;
+    %put NOTE: ACTIVATE_NOTES_LOGGING macro-option was YES;
+    %put NOTE: Validatio of Option NOTES at end of macro-logger processing:;
+    %put NOTE: NOTES set: %sysfunc(getoption(notes));
+    %put ; 
+    %end;
+%end;
+%end;
+
+%mend;
+
+
+%macro step_end_logger(_stepid=, activate_source_logging=NO, activate_notes_logging=NO);
+/* Stop timer Macro*/
+options nosource nonotes;
+data _null_;
+    dur = datetime() - &_step_timer_start;
+    put 50*'-' / " STEP: &_stepid. TOTAL DURATION:" dur time13.2 / 50*'-';
+  run;
+  %if %UPCASE(activate_source_logging)=YES %then options source;  
+  %if %UPCASE(activate_notes_logging)=YES %then options notes;
+  %*options source notes;
+%mend;
+
+
+%step_begin_logger(_stepid=ds_001);
+data _null_;
+rc_sleep=sleep(6,1) ;
+run;
+%step_end_logger(_stepid=ds_001);
+
+%step_begin_logger(_stepid=procsql_001);
+proc sql noexec;
+select * from sashelp.vlibnam;
+quit;
+%step_end_logger(_stepid=procsql_001);
+
+
+%step_begin_logger(_stepid=ds_002);
+options nosource;
+data _null_;
+rc_sleep=sleep(6,1) ;
+run;
+%step_end_logger(_stepid=ds_002);
+
+%step_begin_logger(_stepid=procsql_002);
+options nosource;
+proc sql noexec;
+select * from sashelp.vlibnam;
+quit;
+%step_end_logger(_stepid=procsql_002);
+
+
+%step_begin_logger(_stepid=procsql_003,activate_source_logging=YES);
+proc sql noexec;
+select * from sashelp.vlibnam;
+quit;
+%step_end_logger(_stepid=procsql_003,activate_source_logging=YES);
+
+
+%step_begin_logger(_stepid=procsql_004);
+options nosource nonotes;
+proc sql noexec;
+select * from sashelp.vlibnam;
+quit;
+%step_end_logger(_stepid=procsql_004);
+
+options nonotes;
+%step_begin_logger(_stepid=procsql_005,activate_notes_logging=YES);
+proc sql noexec;
+select * from sashelp.vlibnam;
+quit;
+%step_end_logger(_stepid=procsql_005);
+
