@@ -1,0 +1,61 @@
+options nosource;
+/*
+ *--common header to follow
+ */
+%PUT NOTE: ;
+%PUT NOTE: wps.my.001.autoexec.sas ;
+%PUT NOTE: ;
+%PUT NOTE: Executing my wps-sas autoexec dot-sas file located in: ;
+%PUT NOTE: /Applications/WPS.app/Contents/
+%PUT NOTE: ALTLOG SET TO: ;
+%PUT NOTE: %sysfunc(getoption(ALTLOG)) ;
+%PUT NOTE: With a post-fix and abbreviation of -
+%PUT NOTE: wps.sas.log ;
+options source;
+
+%put ;
+%put NOTE: adding in new mywps-system-autocall-macros-directory ;
+%put ;
+
+/*
+steps:
+-check the dir exists and ERROR: note if not found and accessible ;
+-explicitly add the fullpath value to the SASAUTOS stsyem option - allows for cleaner checks of dirs ;
+-list the SASAUTOS option value in the sas-log following the addition ;
+-look for any code where I have already done this approach as I think that I have?
+-or, I can just be explicit and include everything thus negating that check!
+ */
+
+%let macroDir=%str(/tmp);
+%global rc_check_macro_dir_exists; 
+%let rc_check_macro_dir_exists=%sysfunc(fileexist(%str(&macroDir.)));
+%put ;
+%put NOTE: RC Check Macro Dir Exists: &rc_check_macro_dir_exists.   ( 1 = EXISTS    0 = NOTEXISTS);
+%put NOTE: Dir Checked        : &macroDir.;
+%put ;
+
+%*--add new macro here to add path to SASAUTOS pct-IF RC EXISTS EQ 1 (which is the default for pct-IF);
+
+%put NOTE: CFG File Option SASAUTOS set to: %sysfunc(getoption(SASAUTOS));
+
+%macro add_sasautos_dir();
+%if &rc_check_macro_dir_exists. %then %do ;
+/* SYSOPS-NOTE: system glitch means twice setting OPTIONS SASAUTOS holds the desired update */
+options SASAUTOS=(SASAUTOS, "&macroDir.");
+options SASAUTOS=(SASAUTOS, "&macroDir.");
+%put ;
+%put NOTE: macro: add_sasautos: Option SASAUTOS set to: %sysfunc(getoption(SASAUTOS));
+%put ;
+%mytmp_macros_dir_check;
+%end;
+%else %do;
+%put ERROR: provided Macro Dir Not Exists and\or Not Accessible - get SAS System Admin Support ;
+%end;
+%mend;
+
+%add_sasautos_dir;
+options nosource;
+%put ;
+%put NOTE: end of wps.my.001.autoexec.sas codefile;
+%put ;
+options source;
